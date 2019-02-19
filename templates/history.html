@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <div>
+        Current Cash: {{ cash | usd }}
+    </div>
+    <p></p>
+    <div class="form-group">
+        <table>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Transaction Type</th>
+                <th>Time</th>
+                <th>Symbol</th>
+                <th>Amount</th>
+                <th>Price per Share</th>
+                <th>Total</th>
+            </tr>
+
+            {% for i in data %}
+            <tr>
+                <td>{{ i['transaction_id'] }}</td>
+                <td>{{ i['type'] }}</td>
+                <td>{{ i['datetime'] }}</td>
+                <td>{{ i['symbol'] }}</td>
+                <td>{{ i['amount'] }}</td>
+                <td>{{ i['price_per_share'] | usd }}</td>
+                <td>{{ i['total'] | usd }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+{% endblock %}

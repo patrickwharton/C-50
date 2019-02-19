@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="form-group">
+            <table>
+                {% for i in data %}
+                <tr>
+                    <td>{{ i['name'] }}</td>
+                    <td>{{ i['symbol'] }}</td>
+                    <td>{{ i['price'] | usd }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <p></p>
+        <footer class="small text-center text-muted">
+            Prices subject to change.
+        </footer>
+        <p></p>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="stock" placeholder="Enter stock symbol" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit" name="submit">Obtain Another Quote</button>
+    </form>
+
+{% endblock %}

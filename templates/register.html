@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register" class="needs-validation" id="form" method="post">
+        <div class="form-group" id="val">
+            <input id="in" autocomplete="off" autofocus class="form-control" name="username" placeholder="Choose Username" required type="text">
+        </div>
+        <div id="1" class="invalid-feedback">Username unavailable<p></p></div>
+        <div id="4" class="invalid-feedback">User must provide username<p></p></div>
+        <div class="form-group">
+            <input id="pw" class="form-control" name="password" placeholder="Choose Password" required type="password">
+        </div>
+        <div id="2" class="invalid-feedback">User must provide password<p></p></div>
+        <div class="form-group">
+            <input id="co" class="form-control" name="confirmation" placeholder="Retype Password" required type="password">
+        </div>
+        <div id="3" class="invalid-feedback">Passwords don't match<p></p></div>
+        <button id='button' class="btn btn-primary" type="submit">Register</button>
+
+    </form>
+    <ul id='ul'></ul>
+    <script type="text/javascript">
+
+
+    document.getElementById("button").addEventListener("click", function(event){
+        event.preventDefault();
+        if (validuser == true && pw.value.length > 0 && pw.value == co.value)
+        {
+            document.getElementById("form").submit();
+        }
+            if (inn.value.length == 0)
+            {
+                // show must provide username
+                $('#4').show();
+            }
+            if (pw.value.length == 0)
+            {
+                // show please choose password
+                $('#2').show();
+            }
+            if (co.value.length == 0 && pw.value.length != 0)
+            {
+                // show passwords must match
+                $('#3').show();
+            }
+    });
+
+
+    let validuser ='';
+    let inn = document.querySelector('#in');
+    let co = document.querySelector('#co');
+    let pw = document.querySelector('#pw');
+    inn.onkeyup = function() {
+        if (inn.value.length > 0)
+        {
+            // hide please choose username
+            $('#4').hide();
+            $.get('/check?username=' + inn.value, function(data) {
+                validuser = data;
+
+                if (validuser == true)
+                {
+                    $('#1').hide();
+                }
+                else
+                {
+                    $('#1').show();
+                }
+            });
+        }
+    };
+    pw.onkeyup = function() {
+        if (pw.value.length > 0)
+        {
+            // ALERT passwords must match
+            $('#2').hide();
+        }
+        else
+        {
+            $('#2').show();
+        }
+    };
+    co.onkeyup = function() {
+        if (pw.value != co.value)
+        {
+            // ALERT passwords must match
+            $('#3').show();
+        }
+        else
+        {
+            $('#3').hide();
+        }
+    };
+    </script>
+{% endblock %}
